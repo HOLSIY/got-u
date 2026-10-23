@@ -1,0 +1,28 @@
+# Git & System
+.git
+.gitignore
+.DS_Store
+*.swp
+*.log
+
+# Dependencies & Build Artefacts
+node_modules
+dist
+.parts
+uploads/*
+!uploads/.gitkeep
+data/*
+!data/.gitkeep
+
+# Environment & Secrets
+.env
+.env.local
+.env.development
+.env.test
+
+# IDE & Editor configs
+.vscode
+.idea
+
+# AI Studio Agent Artifacts
+.aistudio

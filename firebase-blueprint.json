@@ -1,0 +1,241 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile details, bio, settings and status",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "username": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "bio": { "type": "string", "maxLength": 250 },
+        "status": { "type": "string", "enum": ["online", "offline", "away"] },
+        "lastSeen": { "type": "string" },
+        "theme": { "type": "string" },
+        "language": { "type": "string" },
+        "notificationsEnabled": { "type": "boolean" },
+        "readReceiptsEnabled": { "type": "boolean" },
+        "encryptionEnabled": { "type": "boolean" },
+        "mood": { "type": "object" },
+        "moodPrivacy": { "type": "string" },
+        "isMoodHidden": { "type": "boolean" }
+      },
+      "required": ["uid", "name", "email"]
+    },
+    "Chat": {
+      "title": "Chat Conversation",
+      "description": "A direct or group message channel",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "isGroup": { "type": "boolean" },
+        "members": { "type": "array" },
+        "lastMessageText": { "type": "string" },
+        "lastMessageTimestamp": { "type": "string" },
+        "unreadCount": { "type": "number" },
+        "pinned": { "type": "boolean" },
+        "muted": { "type": "boolean" },
+        "encrypted": { "type": "boolean" },
+        "aiAssistantEnabled": { "type": "boolean" },
+        "eventType": { "type": "string" },
+        "eventDetails": { "type": "object" },
+        "isEventFinished": { "type": "boolean" }
+      },
+      "required": ["id", "members"]
+    },
+    "Message": {
+      "title": "Chat Message",
+      "description": "Direct message item supporting text, media, voice, replies, reactions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "chatId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "mediaUrl": { "type": "string" },
+        "mediaType": { "type": "string", "enum": ["image", "video", "audio", "file"] },
+        "timestamp": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "replyToId": { "type": "string" },
+        "reactions": { "type": "object" },
+        "encrypted": { "type": "boolean" }
+      },
+      "required": ["id", "chatId", "senderId"]
+    },
+    "MemoryCapsule": {
+      "title": "Memory Capsule",
+      "description": "Time-locked futuristic message for direct or group contacts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "recipientId": { "type": "string" },
+        "unlockTimestamp": { "type": "string" },
+        "title": { "type": "string" },
+        "contentType": { "type": "string" },
+        "content": { "type": "string" },
+        "mediaUrls": { "type": "array" },
+        "isUnlocked": { "type": "boolean" },
+        "isPrivate": { "type": "boolean" }
+      },
+      "required": ["id", "senderId", "recipientId", "unlockTimestamp"]
+    },
+    "TimelineMoment": {
+      "title": "Friendship Timeline Moment",
+      "description": "Milestones and memories stored in a friendship storybook",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "chatId": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "title": { "type": "string" },
+        "caption": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "date": { "type": "string" },
+        "type": { "type": "string" },
+        "reactions": { "type": "object" }
+      },
+      "required": ["id", "chatId", "title", "date"]
+    },
+    "Post": {
+      "title": "Social Feed Post",
+      "description": "A post item in the Nexus Feed supporting text, photos, video, quotes, and locations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorUsername": { "type": "string" },
+        "authorAvatar": { "type": "string" },
+        "postType": { "type": "string", "enum": ["photo", "video", "text", "quote", "mixed"] },
+        "caption": { "type": "string" },
+        "quoteText": { "type": "string" },
+        "quoteAuthor": { "type": "string" },
+        "media": { "type": "array" },
+        "locationName": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "likeCount": { "type": "number" },
+        "commentCount": { "type": "number" },
+        "shareCount": { "type": "number" },
+        "moderationStatus": { "type": "string", "enum": ["approved", "rejected", "pending"] },
+        "moderationCategory": { "type": "string" }
+      },
+      "required": ["id", "authorId", "postType", "createdAt"]
+    },
+    "PostComment": {
+      "title": "Feed Post Comment",
+      "description": "Comment on a social feed post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "postId": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorUsername": { "type": "string" },
+        "authorAvatar": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "postId", "authorId", "text", "createdAt"]
+    },
+    "Call": {
+      "title": "WebRTC Call Session",
+      "description": "Real-time 1-on-1 audio/video call signaling and metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "callerId": { "type": "string" },
+        "callerName": { "type": "string" },
+        "callerAvatar": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "receiverName": { "type": "string" },
+        "receiverAvatar": { "type": "string" },
+        "callType": { "type": "string", "enum": ["audio", "video"] },
+        "status": { "type": "string", "enum": ["ringing", "connecting", "connected", "ended", "declined", "missed", "failed"] },
+        "offer": { "type": "object" },
+        "answer": { "type": "object" },
+        "createdAt": { "type": "number" },
+        "startedAt": { "type": "number" },
+        "endedAt": { "type": "number" },
+        "duration": { "type": "number" }
+      },
+      "required": ["id", "callerId", "receiverId", "callType", "status", "createdAt"]
+    },
+    "IceCandidate": {
+      "title": "WebRTC ICE Candidate",
+      "description": "ICE candidate for peer-to-peer connection establishment",
+      "type": "object",
+      "properties": {
+        "candidate": { "type": "string" },
+        "sdpMid": { "type": "string" },
+        "sdpMLineIndex": { "type": "number" }
+      },
+      "required": ["candidate"]
+    },
+    "SystemSettings": {
+      "title": "System Settings & Branding",
+      "description": "Global application branding configuration, logo URL, and metadata",
+      "type": "object",
+      "properties": {
+        "appName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "subTagline": { "type": "string" },
+        "adminName": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "faviconUrl": { "type": "string" },
+        "updatedAt": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SystemSettings" },
+      "description": "Application settings and branding metadata"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile collection"
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/Chat" },
+      "description": "Chat metadata and channels"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages inside a chat thread"
+    },
+    "/memoryCapsules/{capsuleId}": {
+      "schema": { "$ref": "#/entities/MemoryCapsule" },
+      "description": "Time-locked futuristic messages"
+    },
+    "/chats/{chatId}/timelineMoments/{momentId}": {
+      "schema": { "$ref": "#/entities/TimelineMoment" },
+      "description": "Moments on friendship timeline"
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Social feed posts collection"
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/PostComment" },
+      "description": "Comments under feed posts"
+    },
+    "/calls/{callId}": {
+      "schema": { "$ref": "#/entities/Call" },
+      "description": "WebRTC 1-to-1 audio and video call signaling sessions"
+    },
+    "/calls/{callId}/callerCandidates/{candidateId}": {
+      "schema": { "$ref": "#/entities/IceCandidate" },
+      "description": "ICE candidates generated by caller"
+    },
+    "/calls/{callId}/receiverCandidates/{candidateId}": {
+      "schema": { "$ref": "#/entities/IceCandidate" },
+      "description": "ICE candidates generated by receiver"
+    }
+  }
+}

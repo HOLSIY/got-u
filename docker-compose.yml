@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # -------------------------------------------------------------------------
+  # 1. PostgreSQL 16 Relational Database (Metadata, Relations, Indexes)
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: gotu_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gotu_db}
+      POSTGRES_USER: ${POSTGRES_USER:-gotu_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gotu_secret_password}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gotu_user} -d ${POSTGRES_DB:-gotu_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gotu_network
+
+  # -------------------------------------------------------------------------
+  # 2. Redis 7 In-Memory Store (BullMQ Queues, Feed Caching, Deduplication)
+  # -------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: gotu_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD:-gotu_redis_password}"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-gotu_redis_password}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gotu_network
+
+  # -------------------------------------------------------------------------
+  # 3. MinIO S3-Compatible Object Storage (Photos, Videos, HLS Segments)
+  # -------------------------------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: gotu_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY:-gotu_minio_admin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:-gotu_minio_secret}
+    ports:
+      - "9000:9000"   # S3 API Endpoint
+      - "9001:9001"   # Web Console UI
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - gotu_network
+
+  # -------------------------------------------------------------------------
+  # 4. MinIO Bucket Initializer (Auto-creates required buckets on startup)
+  # -------------------------------------------------------------------------
+  minio_create_buckets:
+    image: minio/mc:latest
+    container_name: gotu_minio_create_buckets
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 ${S3_ACCESS_KEY:-gotu_minio_admin} ${S3_SECRET_KEY:-gotu_minio_secret};
+      /usr/bin/mc mb --ignore-existing myminio/gotu-raw-uploads;
+      /usr/bin/mc mb --ignore-existing myminio/gotu-processed-media;
+      /usr/bin/mc anonymous set download myminio/gotu-processed-media;
+      exit 0;
+      "
+    networks:
+      - gotu_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+
+networks:
+  gotu_network:
+    driver: bridge

@@ -1,0 +1,372 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-dark: #0a0b0e;
+    --card-dark: #141620;
+    --card-glass: rgba(255, 255, 255, 0.05);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --accent-pink: #ff2d60;
+    --accent-orange: #ff6b35;
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: #F5F5F7;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    user-select: none;
+  }
+}
+
+/* Light Mode Overrides for Professional Social App Aesthetic */
+html.light body, body.light {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Base canvas background elements remain soft neutral light surface */
+html.light .bg-\[\#0a0b0e\],
+html.light .bg-\[\#050505\],
+html.light .bg-\[\#0a0a0a\],
+html.light .bg-\[\#0f111a\],
+html.light .bg-\[\#06070a\],
+html.light .bg-\[\#0e1017\],
+html.light .bg-\[\#090a10\],
+html.light .bg-\[\#0b0c12\],
+html.light .bg-\[\#10121a\],
+html.light .bg-\[\#11131c\],
+html.light .bg-neutral-900,
+html.light .bg-neutral-950,
+html.light .bg-slate-900,
+html.light .bg-slate-950 {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Cards & Elevated Panels become clean white cards with crisp borders */
+html.light .bg-\[\#12141d\],
+html.light .bg-\[\#141620\],
+html.light .bg-\[\#181a26\],
+html.light .bg-\[\#151824\],
+html.light .bg-\[\#1c1f2e\],
+html.light .bg-\[\#202333\],
+html.light .bg-\[\#1e202e\],
+html.light .bg-neutral-800,
+html.light .bg-slate-800 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Headers & Sticky Bars in Light Mode */
+html.light header,
+html.light nav,
+html.light .sticky,
+html.light .bg-\[\#0a0b0e\]\/95,
+html.light .bg-\[\#0a0b0e\]\/90,
+html.light .bg-\[\#0a0b0e\]\/80,
+html.light .bg-\[\#0a0b0e\]\/60,
+html.light .bg-\[\#050505\]\/90,
+html.light .bg-\[\#12141d\]\/90,
+html.light .bg-\[\#12141d\]\/80,
+html.light .bg-\[\#141620\]\/95 {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(12px) !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Fixed Modal Overlay Backdrops */
+html.light .fixed.inset-0.bg-black\/80,
+html.light .fixed.inset-0.bg-black\/70,
+html.light .fixed.inset-0.bg-black\/60,
+html.light .fixed.inset-0.bg-black\/50,
+html.light .fixed.inset-0.bg-black\/90 {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+}
+
+/* Text Inputs, Textareas, Selects */
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Inner chip surfaces, tool buttons, subtle badges */
+html.light .bg-white\/5,
+html.light .bg-white\/8,
+html.light .bg-white\/10,
+html.light .bg-white\/15,
+html.light .bg-white\/20,
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.05\],
+html.light .bg-neutral-800\/70 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light .hover\:bg-white\/10:hover,
+html.light .hover\:bg-white\/15:hover,
+html.light .hover\:bg-white\/20:hover,
+html.light .hover\:bg-neutral-800:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Text High Contrast Hierarchy */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-neutral-100,
+html.light .text-neutral-200 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-300,
+html.light .text-neutral-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+html.light .text-slate-500,
+html.light .text-neutral-400,
+html.light .text-neutral-500 {
+  color: #64748b !important;
+}
+
+html.light .text-white\/90,
+html.light .text-white\/80 {
+  color: #0f172a !important;
+}
+
+html.light .text-white\/70,
+html.light .text-white\/60 {
+  color: #334155 !important;
+}
+
+html.light .text-white\/50,
+html.light .text-white\/40,
+html.light .text-white\/30 {
+  color: #64748b !important;
+}
+
+/* Borders */
+html.light .border-white\/10,
+html.light .border-white\/8,
+html.light .border-white\/5,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/30,
+html.light .border-neutral-800,
+html.light .border-neutral-700 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-\[\#0a0b0e\],
+html.light .border-\[\#12141d\],
+html.light .border-\[\#141620\] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Accent & Gradient Buttons / Badges MUST maintain white text in Light Mode */
+html.light button.bg-\[\#ff2d60\],
+html.light button.bg-gradient-to-r,
+html.light button.bg-gradient-to-br,
+html.light button.bg-gradient-to-tr,
+html.light .gradient-pink-button,
+html.light .bg-\[\#ff2d60\].text-white {
+  color: #ffffff !important;
+}
+
+html.light button.bg-\[\#ff2d60\] *,
+html.light button.bg-gradient-to-r *,
+html.light button.bg-gradient-to-br *,
+html.light button.bg-gradient-to-tr *,
+html.light .gradient-pink-button * {
+  color: #ffffff !important;
+}
+
+/* Explicit Feed Quote Contrast Rules in Light Mode */
+html.light .feed-quote-text,
+html.light [data-quote-text] {
+  color: #0f172a !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .feed-quote-author,
+html.light [data-quote-author] {
+  color: #334155 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Memory Capsule Vault Contrast Rules in Light Mode */
+html.light .vault-title {
+  color: #0f172a !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .vault-subtitle {
+  color: #475569 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .capsule-title {
+  color: #0f172a !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .capsule-sender-text,
+html.light .capsule-sender-text * {
+  color: #334155 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .capsule-unlock-label {
+  color: #475569 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .capsule-unlock-date {
+  color: #0f172a !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  visibility: visible !important;
+}
+
+/* Live Mood Contrast Rules in Light Mode */
+html.light .live-mood-preview-title {
+  color: #64748b !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .live-mood-preview-text {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.light .chat-bubble-received {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .chat-bubble-sent {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .glass-pill {
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.glass-panel {
+  background: rgba(18, 20, 29, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-pink {
+  background: linear-gradient(135deg, rgba(255, 45, 96, 0.15) 0%, rgba(20, 22, 32, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 45, 96, 0.25);
+}
+
+.glow-pink {
+  box-shadow: 0 0 25px rgba(255, 45, 96, 0.45);
+}
+
+.gradient-pink-button {
+  background: linear-gradient(135deg, #ff2d60 0%, #ff6b35 100%);
+}
+
+.chat-bubble-received {
+  background: rgba(30, 32, 44, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-bubble-sent {
+  background: #232634;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Keyframe Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+

@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /chats/{chatId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+
+      match /messages/{messageId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+
+      match /timelineMoments/{momentId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+    }
+
+    match /memoryCapsules/{capsuleId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    match /stories/{storyId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    match /notifications/{notifId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
+    match /calls/{callId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+
+      match /callerCandidates/{candidateId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+
+      match /receiverCandidates/{candidateId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn();
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+
+      match /likes/{userId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+
+      match /bookmarks/{userId} {
+        allow read: if true;
+        allow create, update, delete: if isSignedIn();
+      }
+    }
+
+    match /reports/{reportId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

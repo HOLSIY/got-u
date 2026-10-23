@@ -1,0 +1,31 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Local Database & Object Storage Volume Data
+postgres_data/
+redis_data/
+minio_data/
+
+# Local Uploads, Media Caches & Temporary Storage
+public/uploads/
+uploads/
+data/
+temp/
+tmp/
+*.part
+*.mp4
+*.m3u8
+*.ts
+!src/data/*.ts
+
+# Secrets & Service Account Keys
+*.pem
+*.key
+*.cert
+service-account*.json

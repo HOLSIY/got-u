@@ -1,0 +1,6 @@
+{
+  "name": "got u",
+  "description": "Connect. Chat. Share. Instantly. A premium, ultra-fast messaging app experience inspired by Nothing OS, Telegram, and Apple Messages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
