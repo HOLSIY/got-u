@@ -48,7 +48,7 @@ export const StoryViewerModal: React.FC<StoryViewerModalProps> = ({
     return null;
   }
 
-  const isOwner = Boolean(currentStory.isYou || (currentUser?.id && currentStory.userId === currentUser.id));
+  const isOwner = currentStory.isYou || currentStory.userId === currentUser.id;
   const isFriend = friendRequests[currentStory.userId] === 'accepted';
 
   // Mark active story as seen

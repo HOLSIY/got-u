@@ -231,7 +231,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           .join('\n');
 
         promptWithContext = `You are an AI Assistant inside the got u messaging app, operating within the chat named "${chat.name}".
-The user is ${currentUser?.fullName || 'User'} (@${currentUser?.username || 'user'}).
+The user is ${currentUser.fullName} (@${currentUser.username}).
 
 Recent Chat Transcript:
 ${recentMessagesText}
@@ -242,7 +242,7 @@ ${textToSend}
 Provide a helpful, precise, and polite answer. If asked to summarize, give clear key points. If asked to draft a message, provide natural and polished response text.`;
       } else {
         promptWithContext = `You are an AI Assistant inside got u messaging app.
-User: ${currentUser?.fullName || 'User'}
+User: ${currentUser.fullName}
 Query: ${textToSend}`;
       }
 
@@ -301,7 +301,7 @@ Query: ${textToSend}`;
     setRepliesResult(null);
     try {
       const lastFew = messages.slice(-5).map((m) => `${m.senderName}: ${m.content}`).join('\n');
-      const prompt = `Based on these recent chat messages:\n${lastFew}\n\nGenerate 4 distinct quick reply suggestions for ${currentUser?.fullName || 'the user'} in JSON format with keys "professional", "funny", "romantic", and "polite". Return ONLY JSON.`;
+      const prompt = `Based on these recent chat messages:\n${lastFew}\n\nGenerate 4 distinct quick reply suggestions for ${currentUser.fullName} in JSON format with keys "professional", "funny", "romantic", and "polite". Return ONLY JSON.`;
 
       const resultText = await callAiApi(prompt, 'You are a smart conversation reply generator. Return valid JSON only.');
       try {

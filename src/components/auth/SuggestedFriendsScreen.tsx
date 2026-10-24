@@ -18,15 +18,15 @@ export const SuggestedFriendsScreen: React.FC = () => {
       setIsLoading(true);
       const users = await fetchFirestoreGlobalUsers();
       // Filter out current user
-      const filtered = users.filter((u) => !currentUser?.id || u.id !== currentUser.id);
+      const filtered = users.filter((u) => u.id !== currentUser.id);
       setSuggestedUsers(filtered);
       setIsLoading(false);
     }
     loadUsers();
-  }, [currentUser?.id]);
+  }, [currentUser.id]);
 
   const displayedUsers = searchQuery.trim()
-    ? searchGlobalUsers(searchQuery, currentUser?.id || '')
+    ? searchGlobalUsers(searchQuery, currentUser.id)
     : suggestedUsers;
 
   return (

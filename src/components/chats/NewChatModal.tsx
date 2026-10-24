@@ -23,7 +23,7 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({ onClose }) => {
     fetchFirestoreGlobalUsers();
   }, []);
 
-  const filtered = searchGlobalUsers(query, currentUser?.id || '');
+  const filtered = searchGlobalUsers(query, currentUser.id);
   const cleanQuery = query.trim().toLowerCase().replace(/^@/, '');
 
   return (

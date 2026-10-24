@@ -28,7 +28,7 @@ export const CallsScreen: React.FC = () => {
 
     if (!search.trim()) return true;
     const query = search.toLowerCase();
-    const isCaller = Boolean(currentUser?.id && call.callerId === currentUser.id);
+    const isCaller = call.callerId === currentUser.id;
     const peerName = isCaller ? call.receiverName : call.callerName;
     return peerName.toLowerCase().includes(query);
   });
@@ -58,7 +58,7 @@ export const CallsScreen: React.FC = () => {
   };
 
   const getCallIcon = (call: CallRecord) => {
-    const isCaller = Boolean(currentUser?.id && call.callerId === currentUser.id);
+    const isCaller = call.callerId === currentUser.id;
     if (call.status === 'missed' || call.status === 'declined') {
       return <PhoneMissed className="w-3.5 h-3.5 text-red-500" />;
     }
@@ -150,7 +150,7 @@ export const CallsScreen: React.FC = () => {
             </div>
             <div className="max-h-52 overflow-y-auto space-y-1.5 no-scrollbar">
               {allUsers
-                .filter((u) => !currentUser?.id || u.id !== currentUser.id)
+                .filter((u) => u.id !== currentUser.id)
                 .map((user) => (
                   <div
                     key={user.id}
@@ -210,7 +210,7 @@ export const CallsScreen: React.FC = () => {
           </div>
         ) : (
           filteredHistory.map((call) => {
-            const isCaller = Boolean(currentUser?.id && call.callerId === currentUser.id);
+            const isCaller = call.callerId === currentUser.id;
             const peerId = isCaller ? call.receiverId : call.callerId;
             const peerName = isCaller ? call.receiverName : call.callerName;
             const peerAvatar = isCaller ? call.receiverAvatar : call.callerAvatar;

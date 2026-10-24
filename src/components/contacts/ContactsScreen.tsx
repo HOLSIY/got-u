@@ -12,7 +12,7 @@ export const ContactsScreen: React.FC = () => {
   const [search, setSearch] = useState('');
   const [selectedUserForProfile, setSelectedUserForProfile] = useState<User | null>(null);
 
-  const filteredUsers = searchGlobalUsers(search, currentUser?.id || '');
+  const filteredUsers = searchGlobalUsers(search, currentUser.id);
   const onlineUsers = filteredUsers.filter((u) => u.isOnline);
 
   const cleanQuery = search.trim().toLowerCase().replace(/^@/, '');

@@ -148,23 +148,21 @@ export const EventGroupDashboard: React.FC<EventGroupDashboardProps> = ({
 
   // Vote on Poll
   const handleVotePoll = async (pollId: string, optionId: string) => {
-    if (!currentUser?.id) return;
-    const currentUid = currentUser.id;
     const updatedPolls = (event.polls || []).map((p) => {
       if (p.id !== pollId) return p;
       const newOptions = p.options.map((opt) => {
-        const hasVoted = opt.votedUserIds.includes(currentUid);
+        const hasVoted = opt.votedUserIds.includes(currentUser.id);
         if (opt.id === optionId) {
           return {
             ...opt,
             votedUserIds: hasVoted
-              ? opt.votedUserIds.filter((id) => id !== currentUid)
-              : [...opt.votedUserIds, currentUid],
+              ? opt.votedUserIds.filter((id) => id !== currentUser.id)
+              : [...opt.votedUserIds, currentUser.id],
           };
         }
         return {
           ...opt,
-          votedUserIds: opt.votedUserIds.filter((id) => id !== currentUid),
+          votedUserIds: opt.votedUserIds.filter((id) => id !== currentUser.id),
         };
       });
       return { ...p, options: newOptions };
@@ -185,7 +183,7 @@ export const EventGroupDashboard: React.FC<EventGroupDashboardProps> = ({
   const goingCount = rsvpEntries.filter(([_, v]) => v === 'going').length;
   const maybeCount = rsvpEntries.filter(([_, v]) => v === 'maybe').length;
   const declinedCount = rsvpEntries.filter(([_, v]) => v === 'declined').length;
-  const myRsvp = currentUser?.id ? event.rsvp?.[currentUser.id] : undefined;
+  const myRsvp = event.rsvp?.[currentUser.id];
 
   // Total expenses spent
   const totalSpent = (event.expenses || []).reduce((sum, e) => sum + e.amount, 0);
@@ -535,7 +533,7 @@ export const EventGroupDashboard: React.FC<EventGroupDashboardProps> = ({
                       </h5>
                       <div className="space-y-2">
                         {poll.options.map((opt) => {
-                          const hasVoted = Boolean(currentUser?.id && opt.votedUserIds.includes(currentUser.id));
+                          const hasVoted = opt.votedUserIds.includes(currentUser.id);
                           return (
                             <button
                               key={opt.id}

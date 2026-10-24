@@ -133,7 +133,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({ user, onClos
     if (!user?.id) return;
 
     // 1. If viewing current user, use currentUser directly
-    if (currentUser?.id && user.id === currentUser.id) {
+    if (user.id === currentUser.id) {
       setLiveUser(currentUser);
       return;
     }
@@ -183,13 +183,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({ user, onClos
     return () => unsub();
   }, [user?.id, currentUser]);
 
-  const isMe = Boolean(currentUser?.id && liveUser?.id && liveUser.id === currentUser.id);
-  const friendStatus = (liveUser?.id && friendRequests[liveUser.id]) || 'none';
-  const isBlocked = Boolean(liveUser?.id && blockedUsers.includes(liveUser.id));
+  const isMe = liveUser.id === currentUser.id;
+  const friendStatus = friendRequests[liveUser.id] || 'none';
+  const isBlocked = blockedUsers.includes(liveUser.id);
 
   // Check if a private chat exists with this user
   const privateChat = chats.find(
-    (c) => !c.isGroup && c.members?.some((m) => liveUser?.id && m.id === liveUser.id)
+    (c) => !c.isGroup && c.members?.some((m) => m.id === liveUser.id)
   );
 
   const handleFriendAction = () => {

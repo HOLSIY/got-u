@@ -201,13 +201,11 @@ const MainRouter: React.FC = () => {
 
 export default function App() {
   return (
-    <ErrorBoundary name="Root">
-      <BrandingProvider>
-        <AppProvider>
-          <MainRouter />
-        </AppProvider>
-      </BrandingProvider>
-    </ErrorBoundary>
+    <BrandingProvider>
+      <AppProvider>
+        <MainRouter />
+      </AppProvider>
+    </BrandingProvider>
   );
 }
 

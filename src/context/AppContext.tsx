@@ -766,7 +766,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         setScreen('main');
       } else {
-        setCurrentUser(getUserIsolatedInitialStore('guest').user);
         setScreen('welcome');
       }
     });
@@ -2222,7 +2221,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setLockedChatPins({});
     setUnlockedChatsInSession({});
     setActiveChatId(null);
-    setCurrentUser(getUserIsolatedInitialStore('guest').user);
     setScreen('welcome');
   };
 

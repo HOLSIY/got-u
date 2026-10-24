@@ -11,7 +11,7 @@ export const GroupsScreen: React.FC = () => {
   const [selectedMembers, setSelectedMembers] = useState<User[]>([]);
 
   const groupChats = chats.filter((c) => c.isGroup);
-  const candidateUsers = allUsers.filter((u) => !currentUser?.id || u.id !== currentUser.id);
+  const candidateUsers = allUsers.filter((u) => u.id !== currentUser.id);
 
   const toggleMemberSelect = (user: User) => {
     if (selectedMembers.some((m) => m.id === user.id)) {

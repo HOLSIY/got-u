@@ -72,13 +72,13 @@ export const ChatListScreen: React.FC = () => {
   const [showCapsulesVault, setShowCapsulesVault] = useState(false);
 
   // User's own stories
-  const userStories = stories.filter((s) => s.isYou || (currentUser?.id && s.userId === currentUser.id));
+  const userStories = stories.filter((s) => s.isYou || s.userId === currentUser.id);
   const myStory = userStories[0];
 
   // Group friends' stories strictly by userId so each user gets ONE story card
   const friendStoriesGroupedMap = new Map<string, Story[]>();
   stories.forEach((s) => {
-    if (!s.isYou && (!currentUser?.id || s.userId !== currentUser.id) && friendRequests[s.userId] === 'accepted') {
+    if (!s.isYou && s.userId !== currentUser.id && friendRequests[s.userId] === 'accepted') {
       const existing = friendStoriesGroupedMap.get(s.userId) || [];
       existing.push(s);
       friendStoriesGroupedMap.set(s.userId, existing);
@@ -315,7 +315,7 @@ export const ChatListScreen: React.FC = () => {
                 {/* Inner whitespace gap padding container */}
                 <div className="w-full h-full rounded-[17.5px] p-[2px] bg-white dark:bg-[#0a0b0e] flex items-center justify-center overflow-hidden relative">
                   <img
-                    src={myStory ? (myStory.thumbnailUrl || myStory.mediaUrl) : (currentUser?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80')}
+                    src={myStory ? (myStory.thumbnailUrl || myStory.mediaUrl) : currentUser.avatarUrl}
                     alt="Your story"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover rounded-[15.5px]"
@@ -635,9 +635,9 @@ export const ChatListScreen: React.FC = () => {
       <MoodSelectorModal
         isOpen={showMoodSelector}
         onClose={() => setShowMoodSelector(false)}
-        currentMood={currentUser?.mood}
-        currentPrivacy={currentUser?.moodPrivacy || 'public'}
-        isMoodHidden={currentUser?.isMoodHidden || false}
+        currentMood={currentUser.mood}
+        currentPrivacy={currentUser.moodPrivacy || 'public'}
+        isMoodHidden={currentUser.isMoodHidden || false}
         onSaveMood={saveUserMood}
       />
 

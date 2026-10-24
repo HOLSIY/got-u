@@ -163,7 +163,7 @@ export const ChatDetailScreen: React.FC = () => {
 
   // Real-time presence listener and profile resolution for the other participant in 1-on-1 chats
   const otherMemberRaw = (!activeChat?.isGroup && activeChat?.members)
-    ? activeChat.members.find((m) => !currentUser?.id || m.id !== currentUser.id) || activeChat.members[0]
+    ? activeChat.members.find((m) => m.id !== currentUser.id) || activeChat.members[0]
     : null;
   const otherUserId = otherMemberRaw?.id;
   const otherUser = otherUserId ? allUsers.find((u) => u.id === otherUserId) || otherMemberRaw : otherMemberRaw;
@@ -1136,7 +1136,7 @@ export const ChatDetailScreen: React.FC = () => {
             <div className="max-h-72 overflow-y-auto space-y-2 pr-1 no-scrollbar">
               {activeChat.members.map((m) => {
                 const liveMember = allUsers.find((u) => u.id === m.id) || m;
-                const isMe = Boolean(currentUser?.id && liveMember.id === currentUser.id);
+                const isMe = liveMember.id === currentUser.id;
                 const isAdmin = activeChat.groupAdmins?.includes(liveMember.id);
 
                 return (

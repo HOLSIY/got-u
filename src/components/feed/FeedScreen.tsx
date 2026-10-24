@@ -15,6 +15,7 @@ import { ReportPostModal } from './ReportPostModal';
 import { Post } from '../../types';
 import { db } from '../../lib/firebase';
 import { collection, onSnapshot, query, orderBy, limit, addDoc } from 'firebase/firestore';
+import { INITIAL_FEED_POSTS } from '../../data/mockPosts';
 import { GotULogo } from '../common/GotULogo';
 import { useBranding } from '../../context/BrandingContext';
 import { useApp } from '../../context/AppContext';
@@ -55,7 +56,7 @@ export const FeedScreen: React.FC = () => {
         }
       }
     } catch {}
-    return [];
+    return INITIAL_FEED_POSTS;
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
